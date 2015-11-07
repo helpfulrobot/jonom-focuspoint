@@ -10,7 +10,7 @@ The goal of this module is to provide some control over automatic image cropping
 
 ## Requirements
 
-SilverStripe 3.1
+SilverStripe 3.2
 
 ## Installation
 
@@ -34,13 +34,14 @@ When you edit an image in the CMS there should be an extra 'Focus Point' field. 
 
 ### In templates and PHP
 
-Use just like $CroppedImage, but use $CroppedFocusedImage instead.
+Use just like existing cropping functions but swap out the names:
+
+- $Fill --> $FocusFill
+- $FillMax --> $FocusFillMax
+- $CropWidth --> $FocusCropWidth
+- $CropHeight --> $FocusCropHeight
 
 ## Advanced usage
-
-### Prevent upscaling
-
-You can specify that images should not be upscaled by passing a third argument: `$image->CroppedFocusedImage($w,$h,$upscale=false)`.
 
 ### Responsive cropping
 
@@ -74,11 +75,21 @@ Try something like this to get a full-screen background image that preserves you
 
 ### Partial cache busting
 
-If you are caching page content that includes a CroppedFocusedImage and you edit the image (i.e. by changing the focus point) but not the page, you may want to invalidate the page's cache as the updated CroppedFocusedImage will have a different filename. Gordon Banderson has written a [robust extension](https://github.com/gordonbanderson/weboftalent-imageeditpartialcachebust) to help you achieve this.
+If you are caching page content that includes a FocusFill and you edit the image (i.e. by changing the focus point) but not the page, you may want to invalidate the page's cache as the updated FocusFill will have a different filename. Gordon Banderson has written a [robust extension](https://github.com/gordonbanderson/weboftalent-imageeditpartialcachebust) to help you achieve this.
 
 ### Fine-tuned cropping in individual contexts
 
 SilverStripe FocusPoint provides an easy and automated way to get better results when forcing an image to be a different aspect ratio. I have some vague plans to offer more fine-grained control over individual crops in the future, but until then I recommend checking out Will Morgan's [SilverStripe CropperField](https://github.com/willmorgan/silverstripe-cropperfield) as an alternative.
+
+## Upgrading from 1.x
+
+- `FocusPointField` has been refactored. If you're using the class in your own code you will need to update it.
+
+## Love this module?
+
+Spending a lot of time on open-source projects can be a bit straining. If you'd like to buy me a coffee, make a recurring donation or just shoot me an email to keep me motivated it's always appreciated!
+
+[<img src="https://www.paypalobjects.com/en_AU/i/btn/btn_donate_LG.gif" alt="Donate">](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z5HEZREZSKA6A)
 
 ## Troubleshooting
 
@@ -92,7 +103,7 @@ As a cache-busting mechanism this module includes approximate focus point coordi
 
 ## To Do
 
- * Override CroppedImage() instead of adding new method (Note: I've tried everything I could think of to do this. It may be impossible)
+ * Override Fill() instead of adding new method (Note: I've tried everything I could think of to do this. It may be impossible)
  * ImageMagick support (maybe already works - can anyone confirm?)
  * Internationalisation
  * Advanced cropping options and interfaces (may be an additional module)
